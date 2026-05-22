@@ -44,6 +44,9 @@ class BoardingHouseResource extends Resource
                                 Forms\Components\Select::make('city_id')
                                     ->relationship('city', 'name')
                                     ->required(),
+                                Forms\Components\Select::make('category_id')
+                                    ->relationship('category', 'name')
+                                    ->required(),
                                 Forms\Components\RichEditor::make('description')
                                     ->required(),
                                 Forms\Components\TextInput::make('price')
@@ -56,6 +59,7 @@ class BoardingHouseResource extends Resource
                         Forms\Components\Tabs\Tab::make('Bonus Ngekost')
                             ->schema([
                                 Forms\Components\Repeater::make('bonuses')
+                                    ->relationship('bonuses')
                                     ->schema([
                                         Forms\Components\FileUpload::make('image')
                                             ->image()
@@ -67,9 +71,36 @@ class BoardingHouseResource extends Resource
                                             ->required(),
                                     ])
                             ]),
-                        Forms\Components\Tabs\Tab::make('Tab 3')
+                        Forms\Components\Tabs\Tab::make('Kamar')
                             ->schema([
-                                // ...
+                                Forms\Components\Repeater::make('rooms')
+                                    ->relationship('rooms')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('name')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('room_type')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('square_feet')
+                                            ->numeric()
+                                            ->required(),
+                                        Forms\Components\TextInput::make('capacity')
+                                            ->numeric()
+                                            ->required(),
+                                        Forms\Components\TextInput::make('price_per_month')
+                                            ->numeric()
+                                            ->prefix('IDR')
+                                            ->required(),
+                                        Forms\Components\Toggle::make('is_available')
+                                            ->required(),
+                                        Forms\Components\Repeater::make('images')
+                                            ->relationship('images')
+                                            ->schema([
+                                                Forms\Components\FileUpload::make('image')
+                                                    ->image()
+                                                    ->directory('rooms')
+                                                    ->required(),
+                                            ])
+                                    ])
                             ]),
                     ])->columnSpan(2)
             ]);
@@ -79,13 +110,19 @@ class BoardingHouseResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('city.name'),
+                Tables\Columns\TextColumn::make('category.name'),
+                Tables\Columns\TextColumn::make('price'),
+                Tables\Columns\ImageColumn::make('thumbnail'),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
