@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Room extends Model
 {
-    use Hasfactory;
+    use Hasfactory, SoftDeletes;
 
     protected $fillable = [
         'boarding_house_id',
