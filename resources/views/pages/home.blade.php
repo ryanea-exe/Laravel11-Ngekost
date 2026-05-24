@@ -30,7 +30,7 @@
                     </div>
                     <div class="flex flex-col gap-[2px]">
                         <h3 class="font-semibold">{{ $category->name }}</h3>
-                        <p class="text-sm text-ngekos-grey">1,304 Kos</p>
+                        <p class="text-sm text-ngekos-grey">{{ $category->boardingHouses->count() }} Kost</p>
                     </div>
                 </div>
             </a>
@@ -82,7 +82,7 @@
                             </div>
                             <hr class="border-[#F1F2F6]">
                             <p class="font-semibold text-lg text-ngekos-orange">
-                                Rp. {{ $boardingHouse->price }}<span class="text-sm text-ngekos-grey font-normal">/bulan</span>
+                                Rp. {{ number_format($boardingHouse->price, 0, ',', '.') }}<span class="text-sm text-ngekos-grey font-normal">/bulan</span>
                             </p>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="flex flex-col gap-[2px]">
                     <h3 class="font-semibold">{{ $city->name }}</h3>
-                    <p class="text-sm text-ngekos-grey">1,304 Kos</p>
+                    <p class="text-sm text-ngekos-grey">{{ $city->boardingHouses->count() }} Kost</p>
                 </div>
             </div>
         </a>
@@ -157,7 +157,7 @@
                     </div>
                     <hr class="border-[#F1F2F6]">
                     <p class="font-semibold text-lg text-ngekos-orange">
-                        Rp. {{ $boardingHouse->price }}<span class="text-sm text-ngekos-grey font-normal">/bulan</span>
+                        Rp. {{ number_format($boardingHouse->price, 0, ',', '.') }}<span class="text-sm text-ngekos-grey font-normal">/bulan</span>
                     </p>
                 </div>
             </div>
